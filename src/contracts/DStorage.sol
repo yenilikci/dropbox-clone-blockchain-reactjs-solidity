@@ -4,7 +4,7 @@ contract DStorage {
   string public name = 'DStorage';
   uint public fileCount = 0;
   mapping(uint => File) public files;
-  // Struct
+
   struct File {
     uint fileId;
     string fileHash;
@@ -13,10 +13,9 @@ contract DStorage {
     string fileName;
     string fileDescription;
     uint uploadTime;
-    address payable upload;
+    address payable uploader;
   }
 
-  // Event
   event FileUploaded(
     uint fileId,
     string fileHash,
@@ -31,8 +30,6 @@ contract DStorage {
   constructor() public {
   }
 
-  // Upload File function
-
   function uploadFile(string memory _fileHash, uint _fileSize, string memory _fileType, string memory _fileName, string memory _fileDescription) public {
     // Make sure the file hash exists
     require(bytes(_fileHash).length > 0);
@@ -43,16 +40,16 @@ contract DStorage {
     // Make sure file fileName exists
     require(bytes(_fileName).length > 0);
     // Make sure uploader address exists
-    require(msg.sender != address(0));
+    require(msg.sender!=address(0));
     // Make sure file size is more than 0
     require(_fileSize>0);
+
     // Increment file id
     fileCount ++;
 
     // Add File to the contract
-    files[fileCount] = File(fileCount, _fileHash,  _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender);
-
+    files[fileCount] = File(fileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender);
     // Trigger an event
-    emit FileUploaded(fileCount, _fileHash,  _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender);
+    emit FileUploaded(fileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender);
   }
 }
