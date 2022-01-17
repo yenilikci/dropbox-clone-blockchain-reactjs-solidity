@@ -117,7 +117,7 @@ class App extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{backgroundColor: '#343A40'}}>
                 <Navbar account={this.state.account}/>
                 {this.state.loading
                     ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
